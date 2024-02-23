@@ -1,11 +1,25 @@
 import { AiFillStar, AiOutlineDelete, AiOutlineStar } from "react-icons/ai";
 
 import "./Cart.css";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../Context/CartContext";
+import StartProvider from "../Components/StartProvider";
+import { Product } from "../Components/Products.type";
 
 export default function Cart() {
+  const context = useContext(CartContext);
+  const { userCart } = context;
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    userCart.forEach((item) => {
+      setProducts((prev) => [...prev, item]);
+    });
+  }, userCart);
+
   return (
     <>
-      {true ? ( // if shoppping cart is not empty
+      {userCart.length !== 0 ? (
         <>
           <section className="cart-topbar">
             <p className="title">All Products In Basket:</p>
@@ -14,35 +28,22 @@ export default function Cart() {
             </button>
           </section>
           <main className="card-index">
-            <div className="card">
-              <img
-                src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-                alt=""
-              />
-              <main>
-                <p>Test Title ...</p>
-                <div className="card-details">
-                  <div>
-                    <AiFillStar style={{ color: "orange" }} />
-                    <AiFillStar style={{ color: "orange" }} />
-                    <AiFillStar style={{ color: "orange" }} />
-                    <AiFillStar style={{ color: "orange" }} />
-                    <AiFillStar style={{ color: "orange" }} />
-
-                    <AiOutlineStar style={{ color: "orange" }} />
-                    <AiOutlineStar style={{ color: "orange" }} />
-                    <AiOutlineStar style={{ color: "orange" }} />
-                    <AiOutlineStar style={{ color: "orange" }} />
-                    <AiOutlineStar style={{ color: "orange" }} />
+            {products.map((item) => (
+              <div key={item.id} className="card">
+                <img src={item.image} alt="" />
+                <main>
+                  <p>{item.title}</p>
+                  <div className="card-details">
+                    <StartProvider {...item}/>
+                    <p>${item.price}</p>
                   </div>
-                  <p>111$</p>
-                </div>
-                <div className="product-count">
-                  <p>Count: 22</p>
-                </div>
-                <button>Remove From Basket</button>
-              </main>
-            </div>
+                  <div className="product-count">
+                    <p>Count: {item.count}</p>
+                  </div>
+                  <button>Remove From Basket</button>
+                </main>
+              </div>
+            ))}
           </main>
         </>
       ) : (
