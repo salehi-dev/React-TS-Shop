@@ -1,10 +1,10 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 import "./ProductCard.css";
 import { Product } from "./Products.type";
 import { CartContext } from "../Context/CartContext";
-import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
 import StartProvider from "./StartProvider";
 
 export default function ProductCard(props: Product) {

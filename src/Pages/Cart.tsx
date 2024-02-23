@@ -1,21 +1,13 @@
-import { AiFillStar, AiOutlineDelete, AiOutlineStar } from "react-icons/ai";
+import { useContext } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
 
 import "./Cart.css";
-import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../Context/CartContext";
 import StartProvider from "../Components/StartProvider";
-import { Product } from "../Components/Products.type";
 
 export default function Cart() {
   const context = useContext(CartContext);
-  const { userCart } = context;
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    userCart.forEach((item) => {
-      setProducts((prev) => [...prev, item]);
-    });
-  }, userCart);
+  const { userCart, removeAllProducts, removeProduct } = context;
 
   return (
     <>
@@ -23,24 +15,26 @@ export default function Cart() {
         <>
           <section className="cart-topbar">
             <p className="title">All Products In Basket:</p>
-            <button>
+            <button onClick={removeAllProducts}>
               Remove All Product <AiOutlineDelete className="delete-icon" />
             </button>
           </section>
           <main className="card-index">
-            {products.map((item) => (
+            {userCart.map((item) => (
               <div key={item.id} className="card">
                 <img src={item.image} alt="" />
                 <main>
                   <p>{item.title}</p>
                   <div className="card-details">
-                    <StartProvider {...item}/>
+                    <StartProvider {...item} />
                     <p>${item.price}</p>
                   </div>
                   <div className="product-count">
                     <p>Count: {item.count}</p>
                   </div>
-                  <button>Remove From Basket</button>
+                  <button onClick={() => removeProduct(item.id)}>
+                    Remove From Basket
+                  </button>
                 </main>
               </div>
             ))}

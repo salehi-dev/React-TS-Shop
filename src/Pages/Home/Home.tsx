@@ -11,10 +11,9 @@ export default function Home() {
       <section>
         <p className="title">All Products</p>
       </section>
-      {/* <img className="index-first-bg" src="/hero-gradient.svg" alt="" /> */}
       <main className="main-index">
         {context.shop.map((product) => (
-          <ProductCard key={product.id} {...product}/>
+          <ProductCard key={product.id} {...product} />
         ))}
       </main>
     </>
