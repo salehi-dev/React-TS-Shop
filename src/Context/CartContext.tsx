@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 import { Product } from "../Components/Products.type";
 
@@ -19,6 +19,12 @@ export default function CartContextProvider({
 }: CartContextProviderProps) {
   const [userCart, setUserCart] = useState<Product[]>([]);
   const [shop, setShop] = useState<Product[]>([]);
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((resp) => resp.json())
+      .then((data) => setShop(data));
+  }, []);
+
   const addProduct = (id: number) => {};
   const removeProduct = (id: number) => {};
   const removeAll = () => {};

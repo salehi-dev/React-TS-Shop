@@ -5,10 +5,10 @@ import Cart from "./Pages/Cart";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-    {/* <Cart /> */}
-  </React.StrictMode>
+   // {/* <Cart /> */}
+  // {/* </React.StrictMode> */}
 );
