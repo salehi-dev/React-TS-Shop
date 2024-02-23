@@ -1,0 +1,31 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  z-index: 999;
+  position: relative;
+}
+.logo {
+  font-size: 2rem;
+  text-decoration: none;
+  margin-top: 12px;
+}
+header span {
+  position: absolute;
+  right: -6px;
+  top: 11px;
+  color: white;
+  font-size: 0.7rem;
+  width: 4px;
+  background: green;
+  padding: 0.1rem 0.4rem;
+  border-radius: 14px;
+}
+header a {
+  cursor: pointer;
+  position: relative;
+  color: black;
+}
+.shop-icon {
+  font-size: 1.6rem;
+}
