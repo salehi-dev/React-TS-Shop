@@ -21,9 +21,11 @@ export default function CartContextProvider({
   const [shop, setShop] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((resp) => resp.json())
-      .then((data) => setShop(data));
+    (async () => {
+      const resp = await fetch("https://fakestoreapi.com/products");
+      const data = (await resp.json()) as Product[];
+      setShop(data);
+    })();
   }, []);
 
   const productMap = new Map();
