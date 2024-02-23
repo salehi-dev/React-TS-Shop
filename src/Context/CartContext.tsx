@@ -9,7 +9,7 @@ export type CartContextType = {
   userCart: Product[];
   addProduct: (id: number) => void;
   removeProduct: (id: number) => void;
-  removeAll: () => void;
+  removeAllProducts: () => void;
   shop: Product[];
 };
 export const CartContext = createContext({} as CartContextType);
@@ -26,14 +26,18 @@ export default function CartContextProvider({
   }, []);
 
   const addProduct = (id: number) => {};
-  const removeProduct = (id: number) => {};
-  const removeAll = () => {};
+  const removeProduct = (productId: number) => {
+    setUserCart((prevProducts) =>
+      prevProducts.filter((product) => product.id !== productId)
+    );
+  };
+  const removeAllProducts = () => setUserCart([]);
   return (
     <CartContext.Provider
       value={{
         addProduct,
         removeProduct,
-        removeAll,
+        removeAllProducts,
         userCart,
         shop,
       }}
