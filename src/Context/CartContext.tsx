@@ -19,19 +19,37 @@ export default function CartContextProvider({
 }: CartContextProviderProps) {
   const [userCart, setUserCart] = useState<Product[]>([]);
   const [shop, setShop] = useState<Product[]>([]);
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((resp) => resp.json())
       .then((data) => setShop(data));
   }, []);
 
-  const addProduct = (id: number) => {};
+  const productMap = new Map();
+  userCart.forEach((product) => productMap.set(product.id, product));
+
+  const addProduct = (productId: number) => {
+    const product = productMap.get(productId);
+    if (product) {
+      product.count++;
+    } else {
+      const productInCart = shop.find(
+        (product) => product.id === productId
+      ) as Product;
+      productMap.set(productId, { ...productInCart, count: 1 });
+    }
+    setUserCart([...productMap.values()]);
+  };
+
   const removeProduct = (productId: number) => {
     setUserCart((prevProducts) =>
       prevProducts.filter((product) => product.id !== productId)
     );
   };
+
   const removeAllProducts = () => setUserCart([]);
+
   return (
     <CartContext.Provider
       value={{
